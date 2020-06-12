@@ -5,7 +5,7 @@ import subprocess
 import os
 
 from tools.colors import ConsoleColors
-
+from tools.logger import Logger
 
 class Uploader:
     def __init__(self, error_mesages, packager, p_tokens, p_videos_media):
@@ -15,6 +15,8 @@ class Uploader:
         self.__p_request_token = p_tokens / 'youtube/request.token'
         self.__p_client_secrets = p_tokens / 'youtube/client_secrets.json'
         self.__p_videos_metada = p_videos_media / 'metadata.json'
+        
+        self.__logger = Logger()
 
     def commander(self, command, args):
         '''
@@ -51,6 +53,8 @@ class Uploader:
     def __upload_google(self, package):
         cmd = 'gsutil cp {} gs://clipperstorage/output/'.format(package.get_data()['additional_info']['output_video'])
         r = subprocess.run(cmd, shell=True, capture_output=True)
+        self.__logger.log('Video {} uploaded to google storage'.format(package.get_data()['additional_info']['output_video']))
+        self.__logger.separator()
 
     def __upload_youtube(self, package):
         with open(self.__p_videos_metada, 'r') as f:
@@ -93,9 +97,11 @@ class Uploader:
         output = r.stdout
         error = str(r.stderr)
         if 'quota' in error:
-            print('quota')
+            self.__logger.log('Video {} cold not be uploaded to YouTube due to API quota limits'.format(package.get_data()['additional_info']['output_video']))
+            self.__logger.separator()
         else:
-            print('uploaded')
+            self.__logger.log('Video {} uploaded to YouTube'.format(package.get_data()['additional_info']['output_video']))
+            self.__logger.separator()
             output = output.decode('utf-8')
 
             list_output = output.split(' ')

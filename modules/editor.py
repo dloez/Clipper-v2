@@ -6,12 +6,15 @@ from pathlib import Path
 import subprocess
 
 from tools.colors import ConsoleColors
+from tools.logger import Logger
 
 class Editor:
     def __init__(self, error_messages, packager, p_videos_media):
         self.__error_messages = error_messages
         self.__packager = packager
         self.__p_videos_media = p_videos_media
+
+        self.__logger = Logger()
 
     def commander(self, command, args):
         '''
@@ -44,6 +47,8 @@ class Editor:
                 date = datetime.now()
                 output_video = Path(p_output) / str(name + date.strftime('%Y-%m-%d') + '.mp4')
                 self.__generate_video(package, concat_output, output_video)
+                self.__logger.log('video {} created'.format(output_video))
+                self.__logger.separator()
             return True
         else:
             return False

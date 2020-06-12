@@ -2,6 +2,7 @@ import tweepy
 import json
 
 from tools.colors import ConsoleColors
+from tools.logger import Logger
 
 
 class Tweeter:
@@ -12,6 +13,8 @@ class Tweeter:
         self.api = ''
         self.__create_connection()
 
+        self.__logger = Logger()
+
     def commander(self, command, args):
         '''
             tweet (text[0]):
@@ -21,6 +24,8 @@ class Tweeter:
             filter = self.__filter(args, 1)
             if filter:
                 text = args[0]
+                self.__logger.log('New tweet posted to Twitter')
+                self.__logger.separator()
                 self.api.update_status(text.replace('€', ' '))
             return True
         else:

@@ -4,6 +4,8 @@ from pathlib import Path
 import subprocess
 
 from tools.colors import ConsoleColors
+from tools.logger import Logger
+
 
 class Encoder:
     DEFAULT = {
@@ -17,6 +19,8 @@ class Encoder:
     def __init__(self, error_messages, packager):
         self.__error_messages = error_messages
         self.__packager = packager
+
+        self.__logger = Logger()
 
     def commander(self, command, args):
         '''
@@ -40,10 +44,12 @@ class Encoder:
                         if opt == '':
                             continue
                         else:
+                            self.__logger.log('Re-encoding video {}'.format(mp4_file))
                             cmd = 'ffmpeg -i ' + str(mp4_file) + opt + str(mp4_file).replace('.mp4', '') + 'converted.mp4'
                             r = subprocess.run(cmd, capture_output=True, shell=True)
 
                             os.remove(mp4_file)
+                self.__logger.separator()
             return True
         else:
             return False

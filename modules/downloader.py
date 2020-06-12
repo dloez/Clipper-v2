@@ -7,12 +7,15 @@ from pyrfc3339 import generate
 import pytz
 
 from tools.colors import ConsoleColors
+from tools.logger import Logger
 
 class Downloader:
     def __init__(self, error_messages, packager, p_tokens_file):
         self.__error_messages = error_messages
         self.__packager = packager
         self.__p_tokens_file = p_tokens_file
+
+        self.__logger = Logger()
     
     def commander(self, command, args):
         '''
@@ -83,7 +86,7 @@ class Downloader:
                         file_name = Path(package.get_data()['clips_folder']) / clip['id']
                         mp4_name = str(file_name) + '.mp4'
 
-                        #l.log("Downloading: " + str(mp4_name))
+                        self.__logger.log("Downloading: " + str(mp4_name))
 
                         res = requests.get(mp4_url)
                         with open(mp4_name, 'wb') as f:
@@ -144,6 +147,7 @@ class Downloader:
 
         package.get_data()['additional_info']['games'] = games
         package.update()
+        self.__logger.separator()
     
     @staticmethod
     def check_username(username):
