@@ -8,6 +8,7 @@ from modules.encoder import Encoder
 from modules.editor import Editor
 from modules.uploader import Uploader
 from modules.tweeter import Tweeter
+from modules.wrapper import Wrapper
 
 
 def welcome():
@@ -43,11 +44,13 @@ ERROR_MESSAGES = {
 # files
 P_CONFIG_DATA = Path('config/data.json').absolute()
 P_TOKENS_FILE = Path('tokens/tokens.json').absolute()
+P_SCHEDULE = Path('config/schedule.json').absolute()
+P_TWEETS = Path('twitter/tweets.json').absolute()
 
 #paths
 P_TOKENS = Path('tokens').absolute()
 
-# paths that needs to be checked
+# paths that needs to be checked inside clipper
 P_PACKAGES = Path('packages').absolute()
 P_CLIPS = Path('clips').absolute()
 P_OUTPUTS = Path('outputs').absolute()
@@ -61,6 +64,7 @@ modules.append(Encoder(ERROR_MESSAGES, modules[0]))
 modules.append(Editor(ERROR_MESSAGES, modules[0], P_VIDEOS_MEDIA))
 modules.append(Uploader(ERROR_MESSAGES, modules[0], P_TOKENS, P_VIDEOS_MEDIA))
 modules.append(Tweeter(ERROR_MESSAGES, P_TOKENS_FILE))
+modules.append(Wrapper(ERROR_MESSAGES, modules, P_SCHEDULE, P_TWEETS))
 
 check_paths()
 welcome()

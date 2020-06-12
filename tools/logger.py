@@ -11,7 +11,7 @@ class Logger:
     def __check_file(self):
         if not os.path.exists('log.txt'):
             with open('log.txt', 'x') as f:
-                f.write('New log file')
+                f.write('New log file\n')
         self.log_file = 'log.txt'
 
     def log(self, data):
