@@ -109,7 +109,7 @@ class Packager:
             'language': language,
             'upload_google': bool(upload_google),
             'upload_youtube': bool(upload_youtube),
-            'additional_info': {'output_file': '', 'games': []}
+            'additional_info': {'output_video': '', 'games': []}
         }
 
         found = False

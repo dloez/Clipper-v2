@@ -5,6 +5,7 @@ import os
 from modules.packager import Packager
 from modules.downloader import Downloader
 from modules.encoder import Encoder
+from modules.editor import Editor
 
 
 def welcome():
@@ -50,6 +51,7 @@ modules = list()
 modules.append(Packager(ERROR_MESSAGES, P_PACKAGES, P_CLIPS, P_OUTPUTS, P_VIDEOS_MEDIA))
 modules.append(Downloader(ERROR_MESSAGES, modules[0], P_TOKENS_FILE))
 modules.append(Encoder(ERROR_MESSAGES, modules[0]))
+modules.append(Editor(ERROR_MESSAGES, modules[0], P_VIDEOS_MEDIA))
 
 check_paths()
 welcome()
