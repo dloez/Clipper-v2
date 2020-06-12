@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import shutil
 
 from tools.colors import ConsoleColors
 
@@ -33,6 +34,7 @@ class Packager:
                 - create (name): creates package/s
                 - delete (name): deletes package/s
                 - get (name): returns package/s
+                - purge (name): deletes package/s paths
         '''
         if command == 'package':
             filter = self.__filter(args, 2)
@@ -44,6 +46,8 @@ class Packager:
                     self.__delete(name)
                 elif action == 'get':
                     return self.__get(name)
+                elif action == 'purge':
+                    self.__purge(name)
                 else:
                     print(ConsoleColors.RED + 'Action not registered' + ConsoleColors.RESET)
 
@@ -160,6 +164,15 @@ class Packager:
 
         return str(ConsoleColors.RED + 'Error: Package with name {} does not exist'.format(name) + ConsoleColors.RESET)
     
+    def __purge(self, name):
+        if name == 'all':
+            for package in self.__packages:
+                package.delete_paths()
+        else:
+            for package in self.__packages:
+                if name == package.get_data()['name']:
+                    package.delete_paths()
+    
     def __load_packages(self):
         with open(self.__p_packages_file, 'r') as f:
             packages = json.load(f)
@@ -218,3 +231,7 @@ class _Package:
         
         if not os.path.exists(self.__package['output_folder']):
             os.mkdir(self.__package['output_folder'])
+    
+    def delete_paths(self):
+        shutil.rmtree(self.__package['clips_folder'])
+        shutil.rmtree(self.__package['output_folder'])
