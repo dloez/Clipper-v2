@@ -56,6 +56,7 @@ P_CLIPS = Path('clips').absolute()
 P_OUTPUTS = Path('outputs').absolute()
 P_VIDEOS_MEDIA = Path('videos').absolute()
 dirs_paths = list([P_PACKAGES, P_CLIPS, P_OUTPUTS, P_VIDEOS_MEDIA])
+check_paths()
 
 modules = list()
 modules.append(Packager(ERROR_MESSAGES, P_PACKAGES, P_CLIPS, P_OUTPUTS, P_VIDEOS_MEDIA))
@@ -66,7 +67,6 @@ modules.append(Uploader(ERROR_MESSAGES, modules[0], P_TOKENS, P_VIDEOS_MEDIA))
 modules.append(Tweeter(ERROR_MESSAGES, P_TOKENS_FILE))
 modules.append(Wrapper(ERROR_MESSAGES, modules, P_SCHEDULE, P_TWEETS))
 
-check_paths()
 welcome()
 while True:
     user_inp = input('>> ')
