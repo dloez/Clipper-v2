@@ -7,6 +7,7 @@ from modules.downloader import Downloader
 from modules.encoder import Encoder
 from modules.editor import Editor
 from modules.uploader import Uploader
+from modules.tweeter import Tweeter
 
 
 def welcome():
@@ -59,6 +60,7 @@ modules.append(Downloader(ERROR_MESSAGES, modules[0], P_TOKENS_FILE))
 modules.append(Encoder(ERROR_MESSAGES, modules[0]))
 modules.append(Editor(ERROR_MESSAGES, modules[0], P_VIDEOS_MEDIA))
 modules.append(Uploader(ERROR_MESSAGES, modules[0], P_TOKENS, P_VIDEOS_MEDIA))
+modules.append(Tweeter(ERROR_MESSAGES, P_TOKENS_FILE))
 
 check_paths()
 welcome()
