@@ -6,6 +6,7 @@ from modules.packager import Packager
 from modules.downloader import Downloader
 from modules.encoder import Encoder
 from modules.editor import Editor
+from modules.uploader import Uploader
 
 
 def welcome():
@@ -38,9 +39,14 @@ ERROR_MESSAGES = {
     0: 'Missing arguments'
 }
 
+# files
 P_CONFIG_DATA = Path('config/data.json').absolute()
 P_TOKENS_FILE = Path('tokens/tokens.json').absolute()
 
+#paths
+P_TOKENS = Path('tokens').absolute()
+
+# paths that needs to be checked
 P_PACKAGES = Path('packages').absolute()
 P_CLIPS = Path('clips').absolute()
 P_OUTPUTS = Path('outputs').absolute()
@@ -52,6 +58,7 @@ modules.append(Packager(ERROR_MESSAGES, P_PACKAGES, P_CLIPS, P_OUTPUTS, P_VIDEOS
 modules.append(Downloader(ERROR_MESSAGES, modules[0], P_TOKENS_FILE))
 modules.append(Encoder(ERROR_MESSAGES, modules[0]))
 modules.append(Editor(ERROR_MESSAGES, modules[0], P_VIDEOS_MEDIA))
+modules.append(Uploader(ERROR_MESSAGES, modules[0], P_TOKENS, P_VIDEOS_MEDIA))
 
 check_paths()
 welcome()
