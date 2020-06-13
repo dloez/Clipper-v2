@@ -82,9 +82,7 @@ class Downloader:
                         thumbnail_url = clip['thumbnail_url']
 
                         mp4_url = thumbnail_url.split('-preview', 1)[0] + '.mp4'
-
-                        file_name = Path(package.get_data()['clips_folder']) / clip['id']
-                        mp4_name = str(file_name) + '.mp4'
+                        mp4_name = str(Path(package.get_data()['clips_folder']) / str(str(count) + '.mp4'))
 
                         self.__logger.log("Downloading: " + str(mp4_name))
 
