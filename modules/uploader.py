@@ -65,7 +65,7 @@ class Uploader:
                     data = md
 
         number = str(random.randint(1, 15))
-        thumbanil = Path(package.get_data()['thumbanils_folder']) / str(number + '.png')
+        thumbnail = Path(package.get_data()['thumbanils_folder']) / str(number + '.png')
 
         name = package.get_data()['streamers'][0]
         meta = {
@@ -91,7 +91,7 @@ class Uploader:
         with open(meta_file, 'x') as f:
             json.dump(meta, f)
 
-        cmd = './youtubeuploader -metaJSON {0} -thumbnail {1} -filename {2} -cache {3} -secrets {4}'.format(meta_file, thumbanil, package.get_data()['additional_info']['output_video'], self.__p_request_token, self.__p_client_secrets)
+        cmd = './youtubeuploader -metaJSON {0} -thumbnail {1} -filename {2} -cache {3} -secrets {4}'.format(meta_file, thumbnail, package.get_data()['additional_info']['output_video'], self.__p_request_token, self.__p_client_secrets)
         r = subprocess.run(cmd, shell=True, capture_output=True)
 
         output = r.stdout
