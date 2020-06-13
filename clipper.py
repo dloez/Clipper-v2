@@ -9,6 +9,7 @@ from modules.editor import Editor
 from modules.uploader import Uploader
 from modules.tweeter import Tweeter
 from modules.wrapper import Wrapper
+from modules.helper import Helper
 
 
 def welcome():
@@ -66,7 +67,9 @@ modules.append(Editor(ERROR_MESSAGES, modules[0], P_VIDEOS_MEDIA))
 modules.append(Uploader(ERROR_MESSAGES, modules[0], P_TOKENS, P_VIDEOS_MEDIA))
 modules.append(Tweeter(ERROR_MESSAGES, P_TOKENS_FILE))
 modules.append(Wrapper(ERROR_MESSAGES, modules, P_SCHEDULE, P_TWEETS))
+modules.append(Helper())
 
+user_input('clear', [])
 welcome()
 while True:
     user_inp = input('>> ')
