@@ -63,7 +63,7 @@ class Downloader:
         game_ids = dict()
         while count < int(package.get_data()['limit']):
             r = requests.get(
-                'https://api.twitch.tv/helix/clips?broadcaster_id=' + broad_id + '&first=' + package.get_data()['limit'] + '&started_at=' + start + '&ended_at=' + end + '&after=' + pagination,
+                'https://api.twitch.tv/helix/clips?broadcaster_id={}&first={}&started_at={}&ended_at={}&after={}'.format(broad_id, package.get_data()['limit'], start, end, pagination),
                 headers={
                     'Authorization': 'Bearer ' + access_token,
                     'Client-ID': client_id
