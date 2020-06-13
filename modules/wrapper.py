@@ -47,9 +47,9 @@ class Wrapper:
                     self.__process.terminate()
                     self.__process = None
 
-                    print("Clipper auto mode stopped")
+                    print('Clipper auto mode stopped')
                 else:
-                    print("Clipper is not running in auto mode")
+                    print('Clipper is not running in auto mode')
             return True
         return False
 
@@ -81,25 +81,25 @@ def _auto(modules, p_schedule, t, p_tweets):
             time.sleep(10)
 
         d = _as_cest(date.today())
-        dayName = d.strftime("%A")
+        dayName = d.strftime('%A')
 
         names = schedule[dayName]
 
         for name in names:
-            modules[1].commander("download", [name])
-            modules[2].commander("encode", [name])
-            modules[3].commander("edit", [name])
-            url = modules[4].commander("upload", [name])
-            modules[5].commander("purge", [name])
+            modules[1].commander('download', [name])
+            modules[2].commander('encode', [name])
+            modules[3].commander('edit', [name])
+            url = modules[4].commander('upload', [name])
+            modules[0].commander('package', ['purge', name])
             
             with open(p_tweets, 'r') as f:
                 tweets = json.load(f)
             
             tweet = random.choice(tweets)
-            modules[6].commander("tweet", [tweet.format(url)])
+            modules[6].commander('tweet', [tweet.format(url)])
 
         d = date.utcnow() + datetime.timedelta(days=1)
 
 
 def _as_cest(utc):
-    return utc.replace(tzinfo=timezone.utc).astimezone(pytz.timezone("Europe/Madrid"))
+    return utc.replace(tzinfo=timezone.utc).astimezone(pytz.timezone('Europe/Madrid'))
