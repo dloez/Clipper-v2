@@ -45,7 +45,7 @@ class Packager:
                 elif action == 'delete':
                     self.__delete(name)
                 elif action == 'get':
-                    return self.__get(name)
+                    return self.get(name)
                 elif action == 'purge':
                     self.__purge(name)
                 else:
