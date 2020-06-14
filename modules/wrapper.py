@@ -96,7 +96,7 @@ def _auto(modules, p_schedule, t, p_tweets):
                 tweets = json.load(f)
             
             tweet = random.choice(tweets)
-            modules[6].commander('tweet', [tweet.format(url)])
+            modules[5].commander('tweet', [tweet.format(url)])
 
         d = date.utcnow() + datetime.timedelta(days=1)
 
