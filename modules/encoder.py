@@ -38,6 +38,7 @@ class Encoder:
 
                 folder = package.get_data()['clips_folder']
                 for subdir, dirs, files in os.walk(folder):
+                    files.sort()
                     for file in files:
                         mp4_file = Path(folder) / file
                         opt = self.__check_video(mp4_file)

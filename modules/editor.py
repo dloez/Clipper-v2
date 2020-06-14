@@ -39,6 +39,7 @@ class Editor:
 
                 with open(concat_output, 'x') as f:
                     for subdir, dirs, files in os.walk(p_clips):
+                        files.sort()
                         for file in files:
                             mp4_file = Path(p_clips) / file
                             f.write('file ' + str(mp4_file) + '\n')
