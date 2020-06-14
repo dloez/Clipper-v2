@@ -77,12 +77,9 @@ class Uploader:
             'language': data['language']
         }
 
-        meta['title'] += ' || '
         for game in package.get_data()['additional_info']['games']:
-            meta['title'] += game + ' - '
             meta['tags'].append(game)
             meta['tags'].append(game + ' ' + name)
-        meta['title'] = meta['title'][:-2]
 
         meta_file = Path(package.get_data()['output_folder']) / 'meta_file.json'
         if os.path.exists(meta_file):
@@ -113,3 +110,4 @@ class Uploader:
 
             url = 'https://www.youtube.com/watch?v=' + video_id
             return url
+        return True
