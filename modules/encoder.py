@@ -8,7 +8,7 @@ from tools.logger import Logger
 
 
 class Encoder:
-    DEFAULT = {
+    __DEFAULT = {
         'FPS': '60/1',
         'WIDTH': '1920',
         'HEIGHT': '1080',
@@ -63,21 +63,28 @@ class Encoder:
     def __check_video(self, video):
         cmd = 'ffprobe -v error -of json -show_entries stream=time_base,r_frame_rate,width,height ' + str(video)
         r = os.popen(cmd).read()
-        streams = json.loads(r)['streams']
+        j_streams = json.loads(r)['streams']
+
+        streams = list([{}, {}])
+        for j_stream in j_streams:
+            if 'width' in j_stream.keys():
+                streams[0] = j_stream
+            else:
+                streams[1] = j_stream
 
         opt = ''
-        if str(streams[0]['width']) != self.DEFAULT['WIDTH']:
-            opt = opt + ' -vf scale=' + self.DEFAULT['WIDTH'] + ':' + self.DEFAULT['HEIGHT']
-            opt = opt + ' -video_track_timescale ' + self.DEFAULT['TBN'][2:]
-            opt = opt + ' -r ' + self.DEFAULT['FPS'][:-2]
+        if str(streams[0]['width']) != self.__DEFAULT['WIDTH']:
+            opt = opt + ' -vf scale=' + self.__DEFAULT['WIDTH'] + ':' + self.__DEFAULT['HEIGHT']
+            opt = opt + ' -video_track_timescale ' + self.__DEFAULT['TBN'][2:]
+            opt = opt + ' -r ' + self.__DEFAULT['FPS'][:-2]
         else:
-            if streams[0]['time_base'] != self.DEFAULT['TBN']:
-                opt = opt + ' -video_track_timescale ' + self.DEFAULT['TBN'][2:]
-            if streams[0]['r_frame_rate'] != self.DEFAULT['FPS']:
-                opt = opt + ' -r ' + self.DEFAULT['FPS'][:-2]
+            if streams[0]['time_base'] != self.__DEFAULT['TBN']:
+                opt = opt + ' -video_track_timescale ' + self.__DEFAULT['TBN'][2:]
+            if streams[0]['r_frame_rate'] != self.__DEFAULT['FPS']:
+                opt = opt + ' -r ' + self.__DEFAULT['FPS'][:-2]
 
-        if streams[1]['time_base'] != self.DEFAULT['HZ']:
-            opt = opt + ' -ar ' + self.DEFAULT['HZ'][2:]
+        if streams[1]['time_base'] != self.__DEFAULT['HZ']:
+            opt = opt + ' -ar ' + self.__DEFAULT['HZ'][2:]
 
         if opt != '':
             opt = opt + ' '
