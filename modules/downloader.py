@@ -103,7 +103,7 @@ class Downloader:
                         exist = False
                         if len(times) > 0:
                             for i in range(len(times)):
-                                if times[i]['created_at'] < created_at < times[i]['ended_at']:
+                                if times[i]['created_at'] < created_at < times[i]['ended_at'] or times[i]['created_at'] < ended_at < times[i]['ended_at']:
                                     exist = True
                                     break
                                 else:
