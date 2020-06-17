@@ -1,16 +1,19 @@
 import tweepy
 import json
+import random
 
 from tools.colors import ConsoleColors
 from tools.logger import Logger
 
 
 class Tweeter:
-    def __init__(self, error_messages, p_tokens_file):
+    def __init__(self, error_messages, p_tokens_file, packager, p_tweets):
         self.__error_messages = error_messages
         self.__p_tokens_file = p_tokens_file
+        self.__packager = packager
+        self.__p_tweets = p_tweets
 
-        self.api = ''
+        self.__api = ''
         self.__create_connection()
 
         self.__logger = Logger()
@@ -23,10 +26,19 @@ class Tweeter:
         if command == 'tweet':
             filter = self.__filter(args, 1)
             if filter:
-                text = args[0]
-                self.__logger.log('New tweet posted to Twitter')
-                self.__logger.separator()
-                self.api.update_status(text.replace('€', ' '))
+                name = args[0]
+                package = self.__packager.get(name)
+
+                with open(self.__p_tweets, 'r') as f:
+                    tweets = json.load(f)
+
+                tweet = random.choice(tweets)
+                twitter_video = package.get_data()['twitter_video']
+                res = self.__api.media_upload(twitter_video)
+                print(res)
+                '''
+                self.__api.update_status(status=tweet.replace('€', ' ').format(package.get_data()['url_video']), media_ids=[twitter_video])
+                '''
             return True
         else:
             return False
@@ -52,4 +64,4 @@ class Tweeter:
         auth = tweepy.OAuthHandler(self.CONSUMER_KEY, self.CONSUMER_SECRET)
         auth.set_access_token(self.ACCESS_TOKEN, self.ACCESS_TOKEN_SECRET)
 
-        self.api = tweepy.API(auth)
+        self.__api = tweepy.API(auth)

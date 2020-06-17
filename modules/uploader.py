@@ -36,9 +36,7 @@ class Uploader:
                     self.__upload_google(package)
 
                 if package.get_data()['upload_youtube']:
-                    url = self.__upload_youtube(package)
-
-                return url
+                    self.__upload_youtube(package)
 
             return True
         else:
@@ -109,5 +107,6 @@ class Uploader:
             video_id = list_output[index].replace('\nThumbnail', '')
 
             url = 'https://www.youtube.com/watch?v=' + video_id
-            return url
+            package.get_data()['additional_info']['url_video'] = url
+            package.update()
         return True

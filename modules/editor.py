@@ -71,3 +71,10 @@ class Editor:
 
         p.get_data()['additional_info']['output_video'] = str(final_ov)
         p.update()
+
+        '''
+        create twitter_video
+        '''
+        twitter_video = 'test.mp4'
+        p.get_data()['additional_info']['twitter_video'] = twitter_video
+        p.update()

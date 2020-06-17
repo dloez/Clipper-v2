@@ -12,11 +12,10 @@ from tools.logger import Logger
 
 
 class Wrapper:
-    def __init__(self, error_messages, modules, p_schedule, p_tweets):
+    def __init__(self, error_messages, modules, p_schedule):
         self.__error_messages = error_messages
         self.__modules = modules
         self.__p_schedule = p_schedule
-        self.__p_tweets = p_tweets
         self.__process = ''
 
         self.__logger = Logger()
@@ -89,15 +88,9 @@ def _auto(modules, p_schedule, t, p_tweets):
             modules[1].commander('download', [name])
             modules[2].commander('encode', [name])
             modules[3].commander('edit', [name])
-            url = modules[4].commander('upload', [name])
+            modules[4].commander('upload', [name])
+            modules[5].commander('tweet', [name])
             modules[0].commander('package', ['purge', name])
-            
-            if type(url) == str:
-                with open(p_tweets, 'r') as f:
-                    tweets = json.load(f)
-                
-                tweet = random.choice(tweets)
-                modules[5].commander('tweet', [tweet.format(url)])
 
         d = date.utcnow() + datetime.timedelta(days=1)
 
