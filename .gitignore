@@ -14,4 +14,6 @@ packages
 
 log.txt
 
-videos
+videos/thumbnails
+videos/intro.mov
+videos/outro.mp4
