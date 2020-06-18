@@ -6,7 +6,7 @@ import shutil
 downloads = [
     {
         'gcloud': 'gs://clipperstorage/youtube/thumbnails',
-        'dir_path': Path('../videos/thumbnails')
+        'dir_path': Path('../videos')
     },
 
     {
